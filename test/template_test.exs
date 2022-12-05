@@ -71,6 +71,39 @@ defmodule SparkPost.TemplateTest do
     end
   end
 
+  describe "Template.get" do
+    test_with_mock "returns template", HTTPoison,
+      request: fn method, url, body, headers, opts ->
+        assert method == :get
+        assert url =~ "/templates/test-template"
+        fun = MockServer.mk_http_resp(200, MockServer.get_json("gettemplate"))
+        fun.(method, url, body, headers, opts)
+      end do
+      assert %SparkPost.Template{} = Template.get("test-template")
+    end
+
+    test_with_mock "passes :draft param", HTTPoison,
+      request: fn method, url, body, headers, opts ->
+        assert opts[:params] == [draft: true]
+        fun = MockServer.mk_http_resp(200, MockServer.get_json("gettemplate"))
+        fun.(method, url, body, headers, opts)
+      end do
+      assert Template.get("test-template", %{draft: true})
+    end
+
+    test_with_mock "returns error response", HTTPoison,
+      request: fn method, url, body, headers, opts ->
+        fun = MockServer.mk_error("Uknown")
+        fun.(method, url, body, headers, opts)
+      end do
+      assert Template.get("test-template") == %SparkPost.Endpoint.Error{
+               status_code: nil,
+               errors: ["Uknown"],
+               results: nil
+             }
+    end
+  end
+
   test_with_mock "Template.preview succeeds with Content.Inline",
                  HTTPoison,
                  request: fn method, url, body, headers, opts ->

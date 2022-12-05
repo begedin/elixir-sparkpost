@@ -36,11 +36,9 @@ defmodule SparkPost.Template do
   @type t :: %__MODULE__{}
 
   @doc """
-  Lists email templates
+  Lists templates
 
   https://developers.sparkpost.com/api/templates/#templates-get-list-all-templates
-
-
   """
   @spec list(%{
           optional(:draft) => boolean,
@@ -55,6 +53,24 @@ defmodule SparkPost.Template do
 
     :get
     |> Endpoint.request("templates", %{}, %{}, params: query)
+    |> Endpoint.marshal_response(__MODULE__)
+  end
+
+  @doc """
+  Retrieves details of a single template
+
+  https://developers.sparkpost.com/api/templates/#templates-get-list-all-templates
+  """
+  @spec get(String.t(), %{optional(:draft) => boolean}) :: t
+  def get(id, %{} = params \\ %{}) when is_binary(id) do
+    query =
+      params
+      |> Map.take([:draft])
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Keyword.new()
+
+    :get
+    |> Endpoint.request("templates/#{id}", %{}, %{}, params: query)
     |> Endpoint.marshal_response(__MODULE__)
   end
 

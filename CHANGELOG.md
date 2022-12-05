@@ -1,5 +1,10 @@
 ## Change Log
 
+# 0.8 (2022-12-05)
+
+- [FEATURE] Add `SparkPost.Template.get/2`
+- Add some typespecs to various key functions
+
 # 0.7 (2022-11-30)
 
 - [FEATURE] Add `SparkPost.Template.list/1`

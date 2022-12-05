@@ -60,6 +60,10 @@ defmodule SparkPost.Endpoint do
   Extract a meaningful structure from a generic endpoint response:
   response.results[subkey] as struct_type
   """
+  @spec marshal_response(SparkPost.Endpoint.Response.t(), module, atom | nil) ::
+          struct
+          | list(struct)
+          | SparkPost.Endpoint.Error.t()
   def marshal_response(%SparkPost.Endpoint.Response{results: results}, struct_type, nil)
       when is_list(results) do
     Enum.map(results, &struct(struct_type, &1))
@@ -77,6 +81,13 @@ defmodule SparkPost.Endpoint do
     response
   end
 
+  @spec handle_response(
+          {:ok, HTTPoison.Response.t()}
+          | {:error, HTTPoison.Error.t()},
+          boolean
+        ) ::
+          SparkPost.Endpoint.Response.t()
+          | SparkPost.Endpoint.Error.t()
   defp handle_response({:ok, %HTTPoison.Response{status_code: code, body: body}}, decode_results)
        when code >= 200 and code < 300 do
     decoded_body = decode_response_body(body)

@@ -8,4 +8,6 @@ defmodule SparkPost.Endpoint.Response do
   """
 
   defstruct status_code: nil, results: nil
+
+  @type t :: %__MODULE__{}
 end
