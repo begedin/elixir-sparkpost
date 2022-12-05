@@ -1,0 +1,31 @@
+{
+  "results": {
+    "id": "summer_sale",
+    "name": "Summer Sale!",
+    "description": "",
+    "has_draft": true,
+    "has_published": true,
+    "published": false,
+    "shared_with_subaccounts": false,
+    "last_update_time": "2014-05-22T15:12:59+00:00",
+    "last_use": "2014-06-02T08:15:30+00:00",
+    "options": {
+      "open_tracking": false,
+      "click_tracking": true,
+      "transactional": false
+    },
+    "content": {
+      "from": {
+        "email": "marketing@bounces.company.example",
+        "name": "Example Company Marketing"
+      },
+      "subject": "Summer deals for {{name}}",
+      "reply_to": "Summer deals <summer_deals@company.example>",
+      "text": "Check out these deals {{name}}!",
+      "html": "<b>Check out these deals {{name}}!</b>",
+      "headers": {
+        "X-Example-Header": "Summer2014"
+      }
+    }
+  }
+}

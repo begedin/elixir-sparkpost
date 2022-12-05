@@ -16,7 +16,7 @@ defmodule SparkPost.Mixfile do
       source_url: "https://github.com/SparkPost/elixir-sparkpost",
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
-      version: "0.6.0"
+      version: "0.8.0"
     ]
   end
 
